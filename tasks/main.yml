@@ -1,0 +1,5 @@
+---
+
+- name: install ansible
+  include_tasks: "ansible.yml"
+  when: dev-workstation.ansible
