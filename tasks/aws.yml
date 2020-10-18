@@ -1,0 +1,19 @@
+---
+
+  - name: install aws cli client
+    become: yes
+    apt: 
+      name: awscli
+      state: latest
+
+#  - name: ensure aws configuration directory
+#    become: yes
+#
+#    when: item.aws is defined
+#    loop: dev_workstation.workspaces
+
+#  - name: configure aws
+
+
+#  - name: configure aws credentials
+

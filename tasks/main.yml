@@ -1,5 +1,12 @@
 ---
+- name: add developers
+  include_tasks: "user.yml"
+  when: dev_workstation.workspaces
 
 - name: install ansible
   include_tasks: "ansible.yml"
-  when: dev-workstation.ansible
+  when: dev_workstation.ansible
+
+- name: install and configure aws cli
+  include_tasks: "aws.yml"
+  when: dev_workstation.aws
