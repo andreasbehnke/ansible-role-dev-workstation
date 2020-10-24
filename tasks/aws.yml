@@ -6,11 +6,15 @@
       name: awscli
       state: latest
 
-#  - name: ensure aws configuration directory
-#    become: yes
-#
-#    when: item.aws is defined
-#    loop: dev_workstation.workspaces
+  - name: ensure aws configuration directory
+    become: yes
+    file:
+      path: "/home/{{ item.key }}/.aws"
+      state: directory
+      owner: "{{ item.key }}"
+      group: "{{ item.key }}"
+    when: item.value.aws is defined
+    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
 
 #  - name: configure aws
 
