@@ -10,3 +10,7 @@
 - name: install and configure aws cli
   include_tasks: "aws.yml"
   when: dev_workstation.aws
+
+- name: install and configure python
+  include_tasks: "python.yml"
+  when: dev_workstation.python
