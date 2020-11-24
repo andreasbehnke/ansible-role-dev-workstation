@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 {% for profile in item.value.aws.profiles %}
 {%  if profile.name == 'default' %}
 [default]

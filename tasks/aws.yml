@@ -26,5 +26,13 @@
     when: item.value.aws is defined
     loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
 
-#  - name: configure aws credentials
-
+  - name: configure aws credentials
+    become: yes
+    template:
+      dest: "/home/{{ item.key }}/.aws/credentials"
+      src: "aws/credentials.j2"
+      owner: "{{ item.key }}"
+      group: "{{ item.key }}"
+      mode: "0600" # keep credentials secret!
+    when: item.value.aws is defined
+    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
