@@ -1,4 +1,8 @@
 ---
+- name: install and configure git
+  include_tasks: "git.yml"
+  when: dev_workstation.git
+
 - name: install ansible
   include_tasks: "ansible.yml"
   when: dev_workstation.ansible

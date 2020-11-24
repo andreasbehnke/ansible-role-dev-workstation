@@ -1,0 +1,28 @@
+---
+
+  - name: install git
+    become: yes
+    apt: 
+      name: git
+      state: latest
+
+  - name: ensure source directory
+    become: yes
+    file:
+      path: "{{ item.value.source_base }}"
+      owner: "{{ item.key }}"
+      group: "{{ item.key }}"
+      state: "directory"
+    when: item.value.source_base is defined
+    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+
+  - name: clone repositories
+    include_tasks: "git_clone.yml"
+    vars:
+      - repositories: "{{workspace.value.git.repositories}}"
+      - path: "{{ workspace.value.source_base }}"
+      - user: "{{ workspace.key }}"
+    when: workspace.value.git.repositories is defined
+    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+    loop_control:
+      loop_var: "workspace"

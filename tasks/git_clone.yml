@@ -1,0 +1,11 @@
+---
+
+- name: clone repositories
+  become: yes
+  become_user: "{{ user }}"
+  git:
+    dest: "{{ path }}/{{ item.name }}"
+    repo: "{{ item.url }}"
+    update: no
+    accept_hostkey: yes
+  loop: "{{ repositories }}"
