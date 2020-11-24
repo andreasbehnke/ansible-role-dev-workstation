@@ -14,3 +14,7 @@
 - name: install and configure python
   include_tasks: "python.yml"
   when: dev_workstation.python
+
+- name: install docker
+  include_tasks: "docker.yml"
+  when: dev_workstation.docker
