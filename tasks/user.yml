@@ -1,8 +1,0 @@
----
-
-  - name: create users
-    become: yes
-    user:
-      name: "{{item.key}}"
-      generate_ssh_key: yes
-    with_items: "{{ lookup('dict', dev_workstation.workspaces) }}"

@@ -1,0 +1,13 @@
+{% for profile in item.value.aws.profiles %}
+{%  if profile.name == 'default' %}
+[default]
+{%  else %}
+[profile {{ profile.name }}]
+{%  endif %}
+{%  if profile.output | default(false) %}
+output = {{ profile.output }}
+{%  endif %}
+{%  if profile.region | default(false) %}
+region = {{ profile.region }}
+{%  endif %}
+{% endfor %}
