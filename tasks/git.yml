@@ -8,7 +8,7 @@
       state: latest
     when: ! dev_workstation.git_tools
 
-  - name: install git and toos
+  - name: install git and tools
     become: yes
     apt: 
       name: 
@@ -16,6 +16,47 @@
         - meld
       state: latest
     when: dev_workstation.git_tools
+
+  - name: git configuration
+    become: yes
+    become_user: "{{ item.key }}"
+    template: 
+      src: "git/gitconfig.j2"
+      dest: "/home/{{ item.key }}/.gitconfig"
+    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+    
+  - name: git-aware-prompt - ensure bash configuration folder
+    become: yes
+    become_user: "{{ item.key }}"
+    file:
+      path: "/home/{{ item.key }}/.bash"
+      state: directory
+    when: dev_workstation.git_tools
+    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+
+  - name: git-aware-prompt - retrieve repo
+    become: yes
+    become_user: "{{ item.key }}"
+    git:
+      repo: "https://github.com/andreasbehnke/git-aware-prompt.git"
+      dest: "/home/{{ item.key }}/.bash/git-aware-prompt"
+      update: yes
+    when: dev_workstation.git_tools
+    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+
+  - name: configure git aware prompt
+    become: yes
+    become_user: "{{ item.key }}"
+    blockinfile:
+      dest: "/home/{{ item.key }}/.bashrc"
+      content: |
+        export PROMPT_DIRTRIM=2
+        export GITAWAREPROMPT=~/.bash/git-aware-prompt
+        source "${GITAWAREPROMPT}/main.sh"
+        export PS1="\[\033[01;34m\]\w\[\033[00m\] \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
+
+    when: dev_workstation.git_tools
+    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
 
   - name: ensure source directory
     become: yes
