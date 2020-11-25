@@ -3,8 +3,19 @@
   - name: install git
     become: yes
     apt: 
-      name: git
+      name: 
+        - git
       state: latest
+    when: ! dev_workstation.git_tools
+
+  - name: install git and toos
+    become: yes
+    apt: 
+      name: 
+        - git
+        - meld
+      state: latest
+    when: dev_workstation.git_tools
 
   - name: ensure source directory
     become: yes
