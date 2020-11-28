@@ -20,3 +20,11 @@
     name: java-1.8.0-amazon-corretto-jdk
     state: latest
     force: yes
+
+ - name: set JAVA_HOME
+   become: yes
+   lineinfile: 
+    dest: "/etc/environment"
+    state: present
+    regexp: "^JAVA_HOME"
+    line: "JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto"
