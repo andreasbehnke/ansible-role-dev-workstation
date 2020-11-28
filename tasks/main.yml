@@ -1,20 +1,40 @@
 ---
 - name: install and configure git
-  include_tasks: "git.yml"
-  when: dev_workstation.git
+  include_tasks:
+    file: "git.yml"
+    apply:
+      tags: "git"
+  when: dev_workstation.git is defined and dev_workstation.git == True
+  tags: "git"
 
 - name: install ansible
-  include_tasks: "ansible.yml"
-  when: dev_workstation.ansible
+  include_tasks:
+    file: "ansible.yml"
+    apply:
+      tags: "ansible"
+  when: dev_workstation.ansible is defined and dev_workstation.ansible == True
+  tags: "ansible"
 
 - name: install and configure aws cli
-  include_tasks: "aws.yml"
-  when: dev_workstation.aws
+  include_tasks:
+    file: "aws.yml"
+    apply:
+      tags: "aws"
+  when: dev_workstation.aws is defined and dev_workstation.aws == True
+  tags: "aws"
 
 - name: install and configure python
-  include_tasks: "python.yml"
-  when: dev_workstation.python
+  include_tasks:
+    file: "python.yml"
+    apply:
+      tags: "python"
+  when: dev_workstation.python is defined and dev_workstation.python == True
+  tags: "python"
 
 - name: install docker
-  include_tasks: "docker.yml"
-  when: dev_workstation.docker
+  include_tasks:
+    file: "docker.yml"
+    apply:
+      tags: "docker"
+  when: dev_workstation.docker is defined and dev_workstation.docker == True
+  tags: "docker"
