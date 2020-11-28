@@ -38,3 +38,11 @@
       tags: "docker"
   when: dev_workstation.docker is defined and dev_workstation.docker == True
   tags: "docker"
+
+- name: install java
+  include_tasks:
+    file: "java.yml"
+    apply:
+      tags: "java"
+  when: dev_workstation.java is defined
+  tags: "java"

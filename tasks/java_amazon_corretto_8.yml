@@ -1,0 +1,22 @@
+---
+
+ - name: add key for amazon corretto repository
+   become: yes
+   apt_key: 
+    url: "https://apt.corretto.aws/corretto.key"
+    state: present
+
+ - name: add amazon corretto repository
+   become: yes
+   apt_repository: 
+    repo: "deb https://apt.corretto.aws stable main"
+    state: "present"
+    filename: "amazon_corretto" 
+    update_cache: "yes"
+
+ - name: install amazon corretto 8
+   become: yes
+   apt: 
+    name: java-1.8.0-amazon-corretto-jdk
+    state: latest
+    force: yes
