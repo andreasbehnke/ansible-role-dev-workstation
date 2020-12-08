@@ -23,7 +23,7 @@
     template: 
       src: "git/gitconfig.j2"
       dest: "/home/{{ item.key }}/.gitconfig"
-    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+    loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
     
   - name: git-aware-prompt - ensure bash configuration folder
     become: yes
@@ -32,7 +32,7 @@
       path: "/home/{{ item.key }}/.bash"
       state: directory
     when: dev_workstation.git_tools
-    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+    loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
 
   - name: git-aware-prompt - retrieve repo
     become: yes
@@ -42,7 +42,7 @@
       dest: "/home/{{ item.key }}/.bash/git-aware-prompt"
       update: yes
     when: dev_workstation.git_tools
-    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+    loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
 
   - name: configure git aware prompt
     become: yes
@@ -56,7 +56,7 @@
         export PS1="\[\033[01;34m\]\w\[\033[00m\] \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
 
     when: dev_workstation.git_tools
-    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+    loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
 
   - name: ensure source directory
     become: yes
@@ -66,7 +66,7 @@
       group: "{{ item.key }}"
       state: "directory"
     when: item.value.source_base is defined
-    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+    loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
 
   - name: clone repositories
     include_tasks: "git_clone.yml"
@@ -75,6 +75,6 @@
       - path: "{{ workspace.value.source_base }}"
       - user: "{{ workspace.key }}"
     when: workspace.value.git.repositories is defined
-    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+    loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
     loop_control:
       loop_var: "workspace"

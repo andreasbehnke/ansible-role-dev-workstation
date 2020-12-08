@@ -35,7 +35,7 @@
     groups: "docker"
     state: present
     append: yes
-   loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+   loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
    
  - name: install docker-compose
    become: yes

@@ -14,7 +14,7 @@
       owner: "{{ item.key }}"
       group: "{{ item.key }}"
     when: item.value.aws is defined
-    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+    loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
 
   - name: configure aws
     become: yes
@@ -24,7 +24,7 @@
       owner: "{{ item.key }}"
       group: "{{ item.key }}"
     when: item.value.aws is defined
-    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+    loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
 
   - name: configure aws credentials
     become: yes
@@ -35,4 +35,4 @@
       group: "{{ item.key }}"
       mode: "0600" # keep credentials secret!
     when: item.value.aws is defined
-    loop: "{{ lookup('dict', dev_workstation.workspaces) }}"
+    loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
