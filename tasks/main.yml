@@ -46,3 +46,11 @@
       tags: "java"
   when: dev_workstation.java is defined
   tags: "java"
+
+- name: install tools
+  include_tasks:
+    file: "tools.yml"
+    apply:
+      tags: "tools"
+  when: dev_workstation.tools is defined
+  tags: "tools"
