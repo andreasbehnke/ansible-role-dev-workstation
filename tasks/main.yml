@@ -47,6 +47,19 @@
   when: dev_workstation.java is defined
   tags: "java"
 
+- name: install node version manager and node lts
+  include_tasks:
+    file: "nodejs.yml"
+    apply:
+      tags: "nodejs"
+  vars:
+    - user: "{{ workspace.key }}"
+  loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
+  loop_control:
+    loop_var: "workspace"
+  when: dev_workstation.nodejs is defined and dev_workstation.nodejs == True
+  tags: "nodejs"
+
 - name: install tools
   include_tasks:
     file: "tools.yml"
