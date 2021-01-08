@@ -4,3 +4,7 @@
   docker_compose_url: "https://github.com/docker/compose/releases/download/{{docker_compose_version}}/docker-compose-{{ansible_system}}-{{ansible_architecture}}"
 
   nvm_version: "v0.37.2"
+
+  eclipse_cdt_version: "2020-12"
+  eclipse_cdt_file_name: "eclipse-cpp-{{eclipse_cdt_version}}-R-linux-gtk-x86_64.tar.gz"
+  eclipse_cdt_url: "https://mirrors.dotsrc.org/eclipse/technology/epp/downloads/release/{{ eclipse_cdt_version }}/R/{{eclipse_cdt_file_name}}"

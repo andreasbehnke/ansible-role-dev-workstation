@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type = Application
+Terminal = false
+Name = Eclipse C/C++
+Exec = /usr/local/bin/eclipse-cdt
+Icon = /opt/eclipse_cdt/eclipse/icon.xpm
+Categories = Application;

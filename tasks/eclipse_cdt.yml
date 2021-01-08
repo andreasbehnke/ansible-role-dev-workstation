@@ -1,0 +1,36 @@
+---
+# install eclipse-cdt for C++ development
+# based on this steps:
+# https://linuxconfig.org/eclipse-ide-for-c-c-developers-installation-on-ubuntu-20-04
+
+- name: ensure base directory
+  become: yes
+  file:
+    dest: "/opt/eclipse_cdt"
+    state: directory
+
+- name: download eclipse C++
+  become: yes
+  get_url:
+    dest: "/opt/eclipse_cdt"
+    url: "{{ eclipse_cdt_url }}"
+
+- name: untar eclipse C++
+  become: yes
+  unarchive:
+    remote_src: yes
+    dest: "/opt/eclipse_cdt"
+    src: "/opt/eclipse_cdt/{{ eclipse_cdt_file_name }}"  
+
+- name: create symlink to eclipse C++
+  become: yes
+  file:
+    src: "/opt/eclipse_cdt/eclipse/eclipse"
+    dest: "/usr/local/bin/eclipse-cdt"
+    state: link
+
+- name: create app starter for eclipse C++
+  become: yes
+  copy:
+    src: "eclipse_cdt/eclipse_cdt.desktop"
+    dest: "/usr/share/applications/eclipse_cdt.desktop"

@@ -47,6 +47,14 @@
   when: dev_workstation.java is defined
   tags: "java"
 
+- name: install eclipse_cdt
+  include_tasks:
+    file: "eclipse_cdt.yml"
+    apply:
+      tags: "eclipse_cdt"
+  when: dev_workstation.eclipse_cdt is defined and dev_workstation.eclipse_cdt == True
+  tags: "eclipse_cdt"
+
 - name: install node version manager and node lts
   include_tasks:
     file: "nodejs.yml"
