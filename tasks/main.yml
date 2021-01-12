@@ -47,6 +47,13 @@
   when: dev_workstation.java is defined
   tags: "java"
 
+- name: install gradle
+  include_tasks:
+    file: "gradle.yml"
+    apply:
+      tags: "gradle"
+  tags: "gradle"
+
 - name: install eclipse_cdt
   include_tasks:
     file: "eclipse_cdt.yml"

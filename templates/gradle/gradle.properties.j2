@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+{% for property in item.value.gradle.properties %}
+{{ property.name }}={{ property.value }}
+{% endfor %}

@@ -8,3 +8,6 @@
   eclipse_cdt_version: "2020-12"
   eclipse_cdt_file_name: "eclipse-cpp-{{eclipse_cdt_version}}-R-linux-gtk-x86_64.tar.gz"
   eclipse_cdt_url: "https://mirrors.dotsrc.org/eclipse/technology/epp/downloads/release/{{ eclipse_cdt_version }}/R/{{eclipse_cdt_file_name}}"
+
+  gradle_version: "6.8"
+  gradle_url: "https://downloads.gradle-dn.com/distributions/gradle-{{gradle_version}}-bin.zip"
