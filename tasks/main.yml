@@ -74,11 +74,3 @@
     loop_var: "workspace"
   when: dev_workstation.nodejs is defined and dev_workstation.nodejs == True
   tags: "nodejs"
-
-- name: install tools
-  include_tasks:
-    file: "tools.yml"
-    apply:
-      tags: "tools"
-  when: dev_workstation.tools is defined
-  tags: "tools"
