@@ -1,14 +1,13 @@
 # {{ ansible_managed }}
 {% for profile in item.value.aws.profiles %}
-{%  if profile.name == 'default' %}
+{%    if profile.name == 'default' %}
 [default]
-{%  else %}
+{%    else %}
 [profile {{ profile.name }}]
-{%  endif %}
-{%  if profile.output | default(false) %}
-output = {{ profile.output }}
-{%  endif %}
-{%  if profile.region | default(false) %}
-region = {{ profile.region }}
-{%  endif %}
+{%    endif %}
+{%    if profile.config is defined %}
+{%       for key, value in profile.config.items() %}
+{{ key }} = {{ value }}
+{%       endfor %}
+{%    endif %}
 {% endfor %}
