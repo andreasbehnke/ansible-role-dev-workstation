@@ -1,4 +1,10 @@
 ---
+- name: inrease number of inotify file system watches which is required for good IDE performance
+  become: yes
+  template: 
+    src: "10-max-user-watches.conf.j2"
+    dest: "/etc/sysctl.d/10-max-user-watches.conf"
+
 - name: install and configure git
   include_tasks:
     file: "git.yml"
