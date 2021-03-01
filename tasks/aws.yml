@@ -33,6 +33,7 @@
       src: "aws/config.j2"
       owner: "{{ item.key }}"
       group: "{{ item.key }}"
+      backup: yes
     when: item.value.aws is defined
     loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
 
@@ -44,5 +45,6 @@
       owner: "{{ item.key }}"
       group: "{{ item.key }}"
       mode: "0600" # keep credentials secret!
+      backup: yes
     when: item.value.aws is defined
     loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
