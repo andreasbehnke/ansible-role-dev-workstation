@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+{% for property in workspace.npmrc.properties %}
+{{ property.name }}={{ property.value }}
+{% endfor %}

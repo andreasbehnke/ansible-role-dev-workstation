@@ -74,9 +74,10 @@
     apply:
       tags: "nodejs"
   vars:
-    - user: "{{ workspace.key }}"
+    - user: "{{ workspace_item.key }}"
+    - workspace: "{{ workspace_item.value }}"
   loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
   loop_control:
-    loop_var: "workspace"
+    loop_var: "workspace_item"
   when: dev_workstation.nodejs is defined and dev_workstation.nodejs == True
   tags: "nodejs"

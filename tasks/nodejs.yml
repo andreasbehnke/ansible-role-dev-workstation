@@ -27,3 +27,15 @@
      executable: /bin/bash
    register: nvm_install_result
    changed_when: "'is already installed.' not in nvm_install_result.stdout and 'is already installed.' not in nvm_install_result.stderr"
+
+ - name: configure npmrc file
+   become: yes
+   become_user: "{{ user }}"
+   template:
+    dest: "/home/{{ user }}/.npmrc"
+    src: "nodejs/npmrc.j2"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: "600"
+    backup: yes
+   when: workspace.npmrc is defined
