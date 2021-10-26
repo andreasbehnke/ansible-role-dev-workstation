@@ -50,6 +50,7 @@
     become_user: "{{ item.key }}"
     blockinfile:
       dest: "/home/{{ item.key }}/.bashrc"
+      marker: "# {mark} ANSIBLE MANAGED BLOCK - GIT"
       content: |
         export PROMPT_DIRTRIM=2
         export GITAWAREPROMPT=~/.bash/git-aware-prompt

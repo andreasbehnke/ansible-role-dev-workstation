@@ -48,3 +48,14 @@
       backup: yes
     when: item.value.aws is defined
     loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
+
+  - name: configure aws cli command completion
+    become: yes
+    become_user: "{{ item.key }}"
+    blockinfile:
+      dest: "/home/{{ item.key }}/.bashrc"
+      marker: "# {mark} ANSIBLE MANAGED BLOCK - AWS"
+      content: |
+        complete -C '/usr/local/bin/aws_completer' aws
+    when: item.value.aws is defined
+    loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
