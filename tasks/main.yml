@@ -4,6 +4,7 @@
   template: 
     src: "10-max-user-watches.conf.j2"
     dest: "/etc/sysctl.d/10-max-user-watches.conf"
+  when: dev_workstation.max_user_watches is defined
 
 - name: install and configure git
   include_tasks:
