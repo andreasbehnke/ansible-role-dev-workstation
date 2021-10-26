@@ -8,14 +8,51 @@
         - python3-pip
       state: latest
 
-  - name: install aws cli client and boto3
+  - name: install boto3
     become: yes
     pip: 
       name: 
-        - awscli
         - boto3
       state: latest
+  
+  - name: remove old version of aws cli from pip
+    become: yes
+    pip:
+      name:
+        - awscli
+      state: absent
 
+  - name: remove old version of aws cli from apt
+    become: yes
+    apt: 
+      name: awscli
+      state: absent
+
+  - name: download awscli bundled installer
+    unarchive:
+      src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+      dest: /tmp
+      copy: no
+      creates: /tmp/aws
+
+  - name: run awscli installer
+    become: yes
+    command: /tmp/aws/install
+    args:
+      creates: /usr/local/aws-cli
+
+  - name: add symlink
+    become: yes
+    file: state=link src=/usr/local/bin/aws dest=/usr/bin/aws
+
+  - name: get awscli version
+    shell: "aws --version"
+    register: aws_version
+    changed_when: false
+
+  - name: log installed awscli version
+    debug: var=aws_version.stdout
+  
   - name: ensure aws configuration directory
     become: yes
     file:
