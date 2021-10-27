@@ -63,7 +63,18 @@
     when: item.value.aws is defined
     loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
 
-  - name: configure aws
+  - name: configure aws by using a single file
+    become: yes
+    copy:
+      dest: "/home/{{ item.key }}/.aws/config"
+      src: "{{item.value.aws.config_file}}"
+      owner: "{{ item.key }}"
+      group: "{{ item.key }}"
+      backup: yes
+    when: item.value.aws.config_file is defined
+    loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
+
+  - name: configure aws by using inline profile configuration
     become: yes
     template:
       dest: "/home/{{ item.key }}/.aws/config"
@@ -71,10 +82,10 @@
       owner: "{{ item.key }}"
       group: "{{ item.key }}"
       backup: yes
-    when: item.value.aws is defined
+    when: item.value.aws.profile is defined
     loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
 
-  - name: configure aws credentials
+  - name: configure aws credentials by using inline profile configuration
     become: yes
     template:
       dest: "/home/{{ item.key }}/.aws/credentials"
@@ -83,7 +94,7 @@
       group: "{{ item.key }}"
       mode: "0600" # keep credentials secret!
       backup: yes
-    when: item.value.aws is defined
+    when: item.value.aws.profile is defined
     loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
 
   - name: configure aws cli command completion
