@@ -40,6 +40,7 @@
     src: "gradle/gradle.properties.j2"
     owner: "{{ item.key }}"
     group: "{{ item.key }}"
+    mode: "600"
     backup: yes
   when: item.value.gradle.properties is defined
   loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
