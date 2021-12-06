@@ -11,3 +11,6 @@
 
   gradle_version: "6.8"
   gradle_url: "https://downloads.gradle-dn.com/distributions/gradle-{{gradle_version}}-bin.zip"
+
+  maven_version: "3.8.4"
+  maven_url: "https://dlcdn.apache.org/maven/maven-3/{{maven_version}}/binaries/apache-maven-{{maven_version}}-bin.zip"

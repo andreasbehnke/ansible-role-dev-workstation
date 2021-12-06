@@ -1,0 +1,46 @@
+---
+# https://maven.apache.org/install.html
+- name: install maven - create path
+  become: yes
+  file:
+    path: /opt/maven
+    state: directory
+  when: dev_workstation.maven.install is defined and dev_workstation.maven.install == True
+
+- name: install maven - download
+  become: yes
+  unarchive:
+    src: "{{maven_url}}"
+    dest: /opt/maven
+    remote_src: yes
+  when: dev_workstation.maven.install is defined and dev_workstation.maven.install == True
+
+- name: install maven - smylink binary
+  become: yes
+  file:
+    path: /usr/local/bin/maven
+    src: "/opt/maven/maven-{{maven_version}}/bin/maven"
+    state: link
+  when: dev_workstation.maven.install is defined and dev_workstation.maven.install == True
+
+- name: ensure maven configuration directory
+  become: yes
+  file:
+    path: "/home/{{ item.key }}/.m2"
+    state: directory
+    owner: "{{ item.key }}"
+    group: "{{ item.key }}"
+  when: item.value.maven.settings_template is defined
+  loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"
+
+- name: copy maven settings template
+  become: yes
+  template:
+    dest: "/home/{{ item.key }}/.m2/settings.xml"
+    src: "{{item.value.maven.settings_template}}"
+    owner: "{{ item.key }}"
+    group: "{{ item.key }}"
+    mode: "600"
+    backup: yes
+  when: item.value.maven.settings_template is defined
+  loop: "{{ lookup('dict', dev_workstation.workspaces, wantlist=True) }}"

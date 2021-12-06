@@ -61,6 +61,13 @@
       tags: "gradle"
   tags: "gradle"
 
+- name: install maven
+  include_tasks:
+    file: "maven.yml"
+    apply:
+      tags: "maven"
+  tags: "maven"
+
 - name: install eclipse_cdt
   include_tasks:
     file: "eclipse_cdt.yml"
