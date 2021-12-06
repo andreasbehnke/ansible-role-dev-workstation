@@ -5,7 +5,7 @@
   file:
     path: /opt/gradle
     state: directory
-  when: dev_workstation.gradle is defined and dev_workstation.gradle == True
+  when: dev_workstation.gradle.install is defined and dev_workstation.gradle.install == True
 
 - name: install gradle - download
   become: yes
@@ -13,7 +13,7 @@
     src: "{{gradle_url}}"
     dest: /opt/gradle
     remote_src: yes
-  when: dev_workstation.gradle is defined and dev_workstation.gradle == True
+  when: dev_workstation.gradle.install is defined and dev_workstation.gradle.install == True
 
 - name: install gradle - smylink binary
   become: yes
@@ -21,7 +21,7 @@
     path: /usr/local/bin/gradle
     src: "/opt/gradle/gradle-{{gradle_version}}/bin/gradle"
     state: link
-  when: dev_workstation.gradle is defined and dev_workstation.gradle == True
+  when: dev_workstation.gradle.install is defined and dev_workstation.gradle.install == True
 
 - name: ensure gradle configuration directory
   become: yes
