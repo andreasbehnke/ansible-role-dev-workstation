@@ -4,10 +4,10 @@
    include_tasks:
     file: "java_amazon_corretto_repository.yml"
 
- - name: install amazon corretto 8
+ - name: install amazon corretto 11
    become: yes
    apt: 
-    name: java-1.8.0-amazon-corretto-jdk
+    name: java-11-amazon-corretto-jdk
     state: latest
     force: yes
 
@@ -17,4 +17,4 @@
     dest: "/etc/environment"
     state: present
     regexp: "^JAVA_HOME"
-    line: "JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto"
+    line: "JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto"

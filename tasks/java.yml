@@ -1,5 +1,10 @@
 ---
-- name: install amazon corretto
+- name: install amazon corretto 8
   include_tasks:
     file: "java_amazon_corretto_8.yml"
   when: dev_workstation.java.jdk is defined and dev_workstation.java.jdk == "amazon_corretto_8"
+
+- name: install amazon corretto 11
+  include_tasks:
+    file: "java_amazon_corretto_11.yml"
+  when: dev_workstation.java.jdk is defined and dev_workstation.java.jdk == "amazon_corretto_11"
