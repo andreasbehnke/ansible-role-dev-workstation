@@ -1,9 +1,4 @@
 ---
-  - name: install ansible repository
-    become: yes
-    apt_repository:
-      repo: "ppa:ansible/ansible"
-    when: ansible_distribution_version != '20.04' # ubuntu 20.04 comes with latest version of ansible
 
   - name: install ansible
     become: yes
